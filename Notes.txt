@@ -1,0 +1,24 @@
+Notes for compiling errors for aircrack-ng on Raspberry pi 4
+
+1. When running autoreconf -i I ran into the error below 
+
+Makefile.am:67: error: Libtool library used but 'LIBTOOL' is undefined...
+
+Which i solved by running 'sudo apt-get install libtool' , similar problems this guy shows how to solve below
+https://forum.aircrack-ng.org/index.php?topic=2579.0
+
+2. Right after running autoreconf -i, you need to run './configure --with-experimental' which threw this weird error at
+the very end of the output.
+
+checking for OpenSSL or libgcrypt... configure: error: one of OpenSSL or Gcrypt was not found
+
+I first ran 'sudo apt-get updates' then 'sudo apt-get install airgraph-ng' but no luck on fixing error
+It's important to note that everyone says and the README.md says to make sure you have a list of things installed beforehand...
+I read through the whole thing so hopefully this works for your raspberry pi 4 too
+Since raspberry pi OS is debian based, you can just run this with sudo or as root to make sure all the dependencies are there and that should clear your error
+
+'apt-get install build-essential autoconf automake libtool pkg-config libssl-dev shtool zlib1g-dev libpcap-dev libsqlite3-dev libpcre2-dev libhwloc-dev libcmocka-dev screen expect libbsd-dev'
+
+3. Next command to run was make install which threw permission denied errors immediately, you can just use sudo to get rid of all of the errors and ignore the warnings in the output
+
+Then you're done! At least that's all the errors I had to deal with that I can remember.
